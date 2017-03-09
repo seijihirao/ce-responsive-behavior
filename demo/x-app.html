@@ -1,0 +1,47 @@
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../ce-responsive-behavior.html">
+
+<dom-module id="x-app">
+    <template>
+        <style>
+            div.list {
+                width: 100%;
+            }
+            div.list > span {
+                display: inline-block;
+                margin: 1px;
+                padding: 10px;
+
+                background-color: #607D8B;
+                color: white;
+            }
+            div.list.small > span {
+                width: 100%;
+            }
+            div.list.large > span {
+                width: 20%;
+            }
+        </style>
+        <template is="dom-if" if="[[isSmallScreen]]">
+	        <h1>This is a mobile app</h1>
+	    </template>
+        <template is="dom-if" if="[[isLargeScreen]]">
+		    <h1>This is a desktop app</h1>
+		</template>
+        
+        <div class$="list [[responsiveCase('small', 'large')]]">
+            <span>My item 1</span>
+            <span>My item 2</span>
+            <span>My item 3</span>
+        </div>
+	</template>
+	<script>
+		Polymer({
+		    is: "x-app",
+
+			behaviors: [
+				CustomElements.AppResponsiveBehavior
+			],
+		});
+	</script>
+</dom-module>

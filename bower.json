@@ -1,0 +1,34 @@
+{
+  "name": "ce-responsive-behavior",
+  "version": "0.1.0",
+  "description": "Simple element behavior to make your app responsive",
+  "authors": [
+    "Rodrigo Seiji Piubeli Hirao"
+  ],
+  "keywords": [
+    "polymer",
+    "web",
+    "responsive",
+    "responsiveness",
+    "mobile",
+    "component",
+    "web component",
+    "web-components"
+  ],
+  "main": "ce-responsive-behavior.html",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/seijihirao/ce-responsive-behavior.git"
+  },
+  "license": "LICENSE.txt",
+  "homepage": "https://github.com/seijihirao/ce-page-manager",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.4.0"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.0.0",
+    "web-component-tester": "^4.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
+  }
+}

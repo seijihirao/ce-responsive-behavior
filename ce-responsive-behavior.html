@@ -1,0 +1,189 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<!--
+`ce-responsive-behavior`
+Simple element behavior to make your app responsive
+
+@demo demo/index.html 
+-->
+
+<script>
+
+/**
+ * `CustomElements.AppResponsiveBehavior` is a behavior to know if your screen is large or small 
+ * with its code based on polymer mediaquery example code
+ * 
+ * Sample application for responsive interface:
+ *
+ *	<dom-module id="x-app">
+ *		<template>
+ *      <template is="dom-if" if="[[isSmallScreen]]">
+ *			  <div>This is a mobile app</div>
+ *		  </template>
+ *      <template is="dom-if" if="[[isLargeScreen]]">
+ *			  <div>This is a desktop app</div>
+ *		  </template>
+ *		</template>
+ *		<script>
+ *			Polymer({
+ *				is: "x-app",
+ *
+ *				behaviors: [
+ *					CustomElements.AppResponsiveBehavior
+ *				],
+ *			});
+ *		&lt;/script>
+ *	</dom-module>
+ *
+ * Sample application for responsive classes:
+ *
+ *	<dom-module id="x-app">
+ *		<template>
+ *      <style>
+ *        div{
+ *          background-color: #607D8B;
+ *        }
+ *        div.smallScreen{
+ *          width: 100vw;
+ *          height: 20vh;
+ *        }
+ *        div.largeScreen{
+ *          width: 10vw;
+ *          height: 10vh;
+ *        }
+ *      </style>
+ *	    <div class$="[[responsiveCase('smallScreen', 'largeScreen')]]">My App</div>
+ *		</template>
+ *		<script>
+ *			Polymer({
+ *				is: "x-app",
+ *
+ *				behaviors: [
+ *					CustomElements.AppResponsiveBehavior
+ *				],
+ *			});
+ *		&lt;/script>
+ *	</dom-module>
+ *
+ */
+
+
+window.CustomElements = window.CustomElements || {}
+
+/** @polymerBehavior CustomElements.AppResponsiveBehavior */
+CustomElements.AppResponsiveBehavior = {
+
+		properties: {
+
+			/**
+			 * The Boolean return value of the media query.
+			 */
+			responsiveCase: {
+				type: Function,
+				notify: true
+			},
+
+			/**
+			 * The Boolean return value of the media query.
+			 */
+			isSmallScreen: {
+				type: Boolean,
+				value: false,
+				notify: true
+			},
+
+			/**
+			 * The Boolean return value of the media query.
+			 */
+			isLargeScreen: {
+				type: Boolean,
+				value: false,
+				notify: true
+			},
+
+			/**
+			 * The CSS media query to evaluate.
+			 */
+			query: {
+				type: String,
+				value: 'max-aspect-ratio: 13/9'
+			},
+
+			/**
+			 * If true, the query attribute is assumed to be a complete media query
+			 * string rather than a single media feature.
+			 */
+			_full: {
+				type: Boolean,
+				value: false
+			},
+
+			/**
+			 * @type {function(MediaQueryList)}
+			 */
+			_boundMQHandler: {
+				value: function() {
+					return this._queryHandler.bind(this);
+				}
+			},
+
+			/**
+			 * @type {MediaQueryList}
+			 */
+			_mq: {
+				value: null
+			}
+		},
+
+		attached: function() {
+			this._queryChanged();
+		},
+
+		detached: function() {
+			this._remove();
+		},
+
+		_add: function() {
+			if (this._mq) {
+				this._mq.addListener(this._boundMQHandler);
+			}
+		},
+
+		_remove: function() {
+			if (this._mq) {
+				this._mq.removeListener(this._boundMQHandler);
+			}
+			this._mq = null;
+		},
+
+		_queryChanged: function() {
+			this._remove();
+			var query = this.query;
+			if (!query) {
+				return;
+			}
+			if (!this._full && query[0] !== '(') {
+				query = '(' + query + ')';
+			}
+			this._mq = window.matchMedia(query);
+			this._add();
+			this._queryHandler(this._mq);
+		},
+
+		_queryHandler: function(mq) {
+				this.set('isSmallScreen', mq.matches)
+				this.set('isLargeScreen', !mq.matches)
+				if(mq.matches){
+						this.set('responsiveCase', function(ifTrue, ifFalse){
+								return ifTrue
+						})
+				}else{
+						this.set('responsiveCase', function(ifTrue, ifFalse){
+								ifFalse = ifFalse || ''
+								return ifFalse
+						})
+				}
+		}
+}
+
+</script>
