@@ -1,4 +1,4 @@
-# CustomElements..AppResponsiveBehavior
+# CustomElements.AppResponsiveBehavior
 
 [![Bower version](https://badge.fury.io/bo/ce-responsive-behavior.svg)](https://badge.fury.io/bo/ce-responsive-behavior)
 [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/seijihirao/ce-responsive-behavior)
